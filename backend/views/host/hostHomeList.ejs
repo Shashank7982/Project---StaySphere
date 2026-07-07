@@ -1,0 +1,324 @@
+<%- include('../partials/head') %>
+<style>
+    /* Airbnb-inspired Color Palette */
+    :root {
+        --airbnb-red: #FF5A5F;
+        --airbnb-dark-red: #E00007;
+        --airbnb-pink: #FF385C;
+        --airbnb-coral: #FC642D;
+        --airbnb-bg: #FFFFFF;
+        --airbnb-gray: #717171;
+        --airbnb-light-gray: #F7F7F7;
+        --airbnb-border: #DDDDDD;
+        --airbnb-text: #222222;
+        --airbnb-hover: #F5F5F5;
+    }
+    
+    /* Background */
+    .airbnb-bg {
+        background-color: var(--airbnb-bg);
+    }
+    
+    /* Typography */
+    .airbnb-title {
+        color: var(--airbnb-text);
+        font-weight: 600;
+        letter-spacing: -0.02em;
+    }
+    
+    .airbnb-subtitle {
+        color: var(--airbnb-gray);
+        font-weight: 400;
+    }
+    
+    /* Section Card */
+    .airbnb-section {
+        background: white;
+        border-radius: 16px;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+        border: 1px solid var(--airbnb-border);
+    }
+    
+    /* Property Cards */
+    .airbnb-property-card {
+        background: white;
+        border-radius: 12px;
+        overflow: hidden;
+        border: 1px solid var(--airbnb-border);
+        transition: all 0.3s ease;
+    }
+    
+    .airbnb-property-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+    }
+    
+    /* Image container */
+    .airbnb-image-container {
+        position: relative;
+        height: 200px;
+        overflow: hidden;
+    }
+    
+    .airbnb-image-container img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+    }
+    
+    .airbnb-property-card:hover .airbnb-image-container img {
+        transform: scale(1.05);
+    }
+    
+    /* Rating badge */
+    .airbnb-rating {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        background: white;
+        padding: 6px 10px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+        font-weight: 600;
+        font-size: 14px;
+    }
+    
+    .airbnb-rating svg {
+        color: var(--airbnb-red);
+        margin-right: 4px;
+    }
+    
+    /* Superhost badge (optional) */
+    .airbnb-badge {
+        position: absolute;
+        top: 12px;
+        left: 12px;
+        background: var(--airbnb-red);
+        color: white;
+        padding: 6px 10px;
+        border-radius: 8px;
+        font-size: 12px;
+        font-weight: 600;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+    }
+    
+    /* Card content */
+    .airbnb-card-content {
+        padding: 16px;
+    }
+    
+    .airbnb-property-title {
+        font-size: 18px;
+        font-weight: 600;
+        color: var(--airbnb-text);
+        margin-bottom: 8px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    
+    .airbnb-location {
+        display: flex;
+        align-items: center;
+        color: var(--airbnb-gray);
+        font-size: 14px;
+        margin-bottom: 12px;
+    }
+    
+    .airbnb-location svg {
+        margin-right: 6px;
+        flex-shrink: 0;
+    }
+    
+    /* Price styling */
+    .airbnb-price-row {
+        display: flex;
+        align-items: baseline;
+        margin-bottom: 16px;
+    }
+    
+    .airbnb-price {
+        font-size: 18px;
+        font-weight: 600;
+        color: var(--airbnb-text);
+    }
+    
+    .airbnb-price-unit {
+        color: var(--airbnb-gray);
+        font-size: 14px;
+        margin-left: 4px;
+    }
+    
+    /* Buttons */
+    .airbnb-btn-primary {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        padding: 12px;
+        background: var(--airbnb-text);
+        color: white;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 14px;
+        transition: all 0.2s ease;
+        text-decoration: none;
+        border: none;
+        cursor: pointer;
+    }
+    
+    .airbnb-btn-primary:hover {
+        background: black;
+        transform: translateY(-1px);
+    }
+    
+    .airbnb-btn-danger {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        padding: 12px;
+        background: white;
+        color: var(--airbnb-red);
+        border: 1px solid var(--airbnb-border);
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 14px;
+        transition: all 0.2s ease;
+        cursor: pointer;
+        margin-top: 8px;
+    }
+    
+    .airbnb-btn-danger:hover {
+        background: #FFF8F8;
+        border-color: var(--airbnb-red);
+        color: var(--airbnb-dark-red);
+    }
+    
+    /* Empty state */
+    .airbnb-empty {
+        text-align: center;
+        padding: 60px 20px;
+        color: var(--airbnb-gray);
+    }
+    
+    /* Grid responsive */
+    .airbnb-grid {
+        display: grid;
+        gap: 24px;
+        grid-template-columns: repeat(1, 1fr);
+    }
+    
+    @media (min-width: 640px) {
+        .airbnb-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+    
+    @media (min-width: 1024px) {
+        .airbnb-grid {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+    
+    @media (min-width: 1280px) {
+        .airbnb-grid {
+            grid-template-columns: repeat(4, 1fr);
+        }
+    }
+</style>
+</head>
+<body class="airbnb-bg min-h-screen font-sans">
+    <%- include('../partials/nav')%>
+
+    <main class="container mx-auto p-4 sm:p-6 mt-8 max-w-7xl">
+        <!-- Hero Section -->
+        <div class="text-center mb-10">
+            <h1 class="text-3xl sm:text-4xl airbnb-title mb-3">Your Properties</h1>
+            <p class="airbnb-subtitle text-lg">Manage your listings and track your bookings</p>
+        </div>
+
+        <section class="airbnb-section p-6 sm:p-8">
+            <h2 class="text-2xl airbnb-title mb-6">Welcome back, Host!</h2>
+
+            <% if (registeredHomes && registeredHomes.length > 0) { %>
+            <!-- Cards Grid -->
+            <div class="airbnb-grid">
+                <%registeredHomes.forEach((home)=>{%>
+                <!-- Single Property Card -->
+                <article class="airbnb-property-card">
+                    <div class="airbnb-image-container">
+                        <img src="<%=home.photo%>" alt="<%=home.houseName%>" loading="lazy">
+                        
+                        <!-- Rating Badge -->
+                        <div class="airbnb-rating">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.539 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118l-2.8-2.034c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                            </svg>
+                            <span><%=home.rating%></span>
+                        </div>
+                        
+                        <!-- Optional: Superhost badge if rating > 4.8 -->
+                        <% if (home.rating >= 4.8) { %>
+                        <div class="airbnb-badge">Superhost</div>
+                        <% } %>
+                    </div>
+                    
+                    <div class="airbnb-card-content">
+                        <h3 class="airbnb-property-title"><%=home.houseName%></h3>
+                        
+                        <div class="airbnb-location">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path>
+                            </svg>
+                            <span><%=home.location%></span>
+                        </div>
+                        
+                        <div class="airbnb-price-row">
+                            <span class="airbnb-price">₹<%=home.price%></span>
+                            <span class="airbnb-price-unit">/ night</span>
+                        </div>
+                        
+                        <!-- Action Buttons -->
+                        <a href="/host/editHome/<%=home._id%>?editing=true" class="airbnb-btn-primary">
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                            </svg>
+                            Edit
+                        </a>
+                        
+                        <form action="/host/deleteHome/<%=home._id%>" method="POST" class="w-full">
+                            <button type="submit" class="airbnb-btn-danger" onclick="return confirm('Are you sure you want to delete this property?')">
+                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                                </svg>
+                                Delete
+                            </button>
+                        </form>
+                    </div>
+                </article>
+                <%})%>
+            </div>
+            <% } else { %>
+            <!-- Empty State -->
+            <div class="airbnb-empty">
+                <div class="w-16 h-16 mx-auto mb-4 text-gray-300">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900 mb-2">No properties yet</h3>
+                <p class="mb-6">Start hosting by adding your first property</p>
+                <a href="/host/addHome" class="airbnb-btn-primary inline-block w-auto px-8">
+                    Add Your First Property
+                </a>
+            </div>
+            <% } %>
+        </section>
+    </main>
+    
+</body>
+</html>

@@ -1,0 +1,99 @@
+/* Shared Auth page styles */
+.ss-auth {
+  min-height: 100vh;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 140px 24px 80px 24px;
+  position: relative;
+}
+
+.ss-auth__bg {
+  position: fixed;
+  inset: 0;
+  background-image: url('https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=1920&q=80');
+  background-size: cover;
+  background-position: center;
+  z-index: 0;
+}
+.ss-auth__bg::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: rgba(8,12,20,0.75);
+  backdrop-filter: blur(4px);
+}
+
+.ss-auth__card {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 440px;
+  border-radius: var(--radius-xl);
+  padding: 40px 36px;
+  box-shadow: 0 24px 80px rgba(0,0,0,0.7);
+}
+
+.ss-auth__card--wide { max-width: 600px; }
+
+.ss-auth__logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--text-white);
+  margin-bottom: 28px;
+  text-decoration: none;
+}
+
+.ss-auth__title {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--text-white);
+  margin-bottom: 6px;
+}
+
+.ss-auth__sub {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  margin-bottom: 28px;
+}
+
+.ss-auth__errors {
+  background: rgba(248,113,113,0.08);
+  border: 1px solid rgba(248,113,113,0.25);
+  border-radius: var(--radius-md);
+  padding: 12px 16px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ss-auth__form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.ss-auth__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+@media (max-width: 480px) { .ss-auth__row { grid-template-columns: 1fr; } }
+
+.ss-auth__footer {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 0.875rem;
+  color: var(--text-muted);
+}
+
+.ss-auth__link {
+  color: var(--accent-orange);
+  font-weight: 600;
+  transition: color var(--transition-fast);
+}
+.ss-auth__link:hover { color: var(--accent-orange-h); }

@@ -1,0 +1,30 @@
+{
+  "name": "staysphere",
+  "version": "2.0.0",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "serve": "nodemon app.js",
+    "dev": "nodemon app.js",
+    "seed": "node config/seedDatabase.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "StaySphere — Premium Travel Booking Platform",
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "body-parser": "^2.2.0",
+    "concurrently": "^9.2.0",
+    "connect-mongodb-session": "^5.0.0",
+    "dotenv": "^17.4.2",
+    "express": "^5.1.0",
+    "express-session": "^1.18.2",
+    "express-validator": "^7.2.1",
+    "mongodb": "^6.18.0",
+    "mongoose": "^8.23.0",
+    "multer": "^2.0.2",
+    "mysql2": "^3.14.3",
+    "nodemon": "^3.1.10"
+  }
+}

@@ -1,0 +1,85 @@
+<form action="/store/favourites" method="POST" class="inline-block">
+    <button 
+        type="submit" 
+        class="airbnb-fav-btn flex items-center justify-center gap-2"
+        aria-label="Add to favorites"
+    >
+        <svg class="airbnb-heart" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path 
+                stroke-linecap="round" 
+                stroke-linejoin="round" 
+                stroke-width="2" 
+                d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+            />
+        </svg>
+        <span>Save</span>
+    </button>
+    <input type="hidden" name="id" value="<%=home._id%>">
+</form>
+
+<style>
+    /* Airbnb-style Favorite Button */
+    .airbnb-fav-btn {
+        background: white;
+        color: var(--airbnb-text, #222222);
+        border: 1px solid var(--airbnb-border, #DDDDDD);
+        border-radius: 8px;
+        padding: 12px 20px;
+        font-weight: 600;
+        font-size: 14px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+    }
+    
+    .airbnb-fav-btn:hover {
+        border-color: var(--airbnb-text, #222222);
+        background: var(--airbnb-hover, #F7F7F7);
+        transform: translateY(-1px);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12);
+    }
+    
+    .airbnb-fav-btn:active {
+        transform: translateY(0);
+    }
+    
+    /* Heart icon styling */
+    .airbnb-heart {
+        width: 20px;
+        height: 20px;
+        color: var(--airbnb-red, #FF5A5F);
+        transition: all 0.2s ease;
+    }
+    
+    /* Hover effect - fill the heart */
+    .airbnb-fav-btn:hover .airbnb-heart {
+        fill: var(--airbnb-red, #FF5A5F);
+        stroke: var(--airbnb-red, #FF5A5F);
+        transform: scale(1.1);
+    }
+    
+    /* Alternative: Coral/Red solid button style (more prominent) */
+    .airbnb-fav-btn-solid {
+        background: linear-gradient(135deg, var(--airbnb-red, #FF5A5F) 0%, var(--airbnb-pink, #FF385C) 100%);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        padding: 12px 24px;
+        font-weight: 600;
+        font-size: 14px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        box-shadow: 0 2px 8px rgba(255, 90, 95, 0.3);
+    }
+    
+    .airbnb-fav-btn-solid:hover {
+        background: linear-gradient(135deg, var(--airbnb-dark-red, #E00007) 0%, #E31C5F 100%);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(255, 90, 95, 0.4);
+    }
+    
+    .airbnb-fav-btn-solid .airbnb-heart {
+        color: white;
+        stroke: white;
+    }
+</style>

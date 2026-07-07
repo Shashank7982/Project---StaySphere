@@ -1,0 +1,305 @@
+<%-include('../partials/head')%>
+<style>
+    /* Airbnb-inspired Color Palette */
+    :root {
+        --airbnb-red: #FF5A5F;
+        --airbnb-dark-red: #E00007;
+        --airbnb-pink: #FF385C;
+        --airbnb-coral: #FC642D;
+        --airbnb-bg: #FFFFFF;
+        --airbnb-gray: #717171;
+        --airbnb-light-gray: #F7F7F7;
+        --airbnb-border: #EAEAEA;
+        --airbnb-text: #222222;
+    }
+    
+    /* Smooth gradient background - subtle warm tone */
+    .airbnb-bg {
+        background: radial-gradient(circle at 50% 50%, #FFFDFD 0%, #FFF5F5 50%, #FFF0F0 100%);
+        position: relative;
+        overflow-x: hidden;
+    }
+    
+    /* Floating animated blobs */
+    .bg-blob {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(120px);
+        opacity: 0.15;
+        z-index: 0;
+        pointer-events: none;
+        animation: float 20s infinite alternate ease-in-out;
+    }
+    
+    .blob-1 {
+        top: 10%;
+        left: -10%;
+        width: 450px;
+        height: 450px;
+        background: var(--airbnb-red);
+    }
+    
+    .blob-2 {
+        bottom: 10%;
+        right: -10%;
+        width: 500px;
+        height: 500px;
+        background: var(--airbnb-pink);
+        animation-delay: -7s;
+    }
+
+    @keyframes float {
+        0% { transform: translate(0, 0) scale(1); }
+        50% { transform: translate(60px, -80px) scale(1.15); }
+        100% { transform: translate(-30px, 40px) scale(0.9); }
+    }
+    
+    /* Card styling - Glassmorphism */
+    .airbnb-card {
+        background: rgba(255, 255, 255, 0.85);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border-radius: 20px;
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.03), 0 1px 3px rgba(0, 0, 0, 0.02);
+        border: 1px solid rgba(255, 255, 255, 0.6);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        z-index: 10;
+        position: relative;
+    }
+    
+    .airbnb-card:hover {
+        box-shadow: 0 20px 48px rgba(255, 90, 95, 0.08);
+        transform: translateY(-2px);
+    }
+    
+    /* Logo circle with gradient */
+    .airbnb-logo-circle {
+        background: linear-gradient(135deg, var(--airbnb-red) 0%, var(--airbnb-pink) 100%);
+        box-shadow: 0 6px 20px rgba(255, 90, 95, 0.25);
+        color: white;
+    }
+    
+    /* Typography */
+    .airbnb-title {
+        color: var(--airbnb-text);
+        font-weight: 700;
+        letter-spacing: -0.03em;
+    }
+    
+    .airbnb-subtitle {
+        color: var(--airbnb-gray);
+        font-weight: 400;
+    }
+    
+    /* Form inputs */
+    .airbnb-input-group {
+        position: relative;
+    }
+    
+    .airbnb-input {
+        width: 100%;
+        padding: 14px 16px 14px 48px;
+        border: 1px solid var(--airbnb-border);
+        border-radius: 12px;
+        font-size: 16px;
+        color: var(--airbnb-text);
+        background: rgba(255, 255, 255, 0.7);
+        transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .airbnb-input:focus {
+        outline: none;
+        border-color: var(--airbnb-red);
+        background: white;
+        box-shadow: 0 0 0 4px rgba(255, 90, 95, 0.15);
+    }
+    
+    .airbnb-input::placeholder {
+        color: #A0A0A0;
+    }
+    
+    /* Input icons */
+    .input-icon {
+        position: absolute;
+        left: 16px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--airbnb-gray);
+        pointer-events: none;
+        transition: color 0.25s ease;
+    }
+    
+    .airbnb-input:focus + .input-icon {
+        color: var(--airbnb-red);
+    }
+    
+    /* Primary Button - Airbnb style */
+    .airbnb-btn {
+        width: 100%;
+        padding: 15px 24px;
+        background: linear-gradient(135deg, var(--airbnb-red) 0%, var(--airbnb-pink) 100%);
+        color: white;
+        border: none;
+        border-radius: 12px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 4px 15px rgba(255, 90, 95, 0.25);
+    }
+    
+    .airbnb-btn:hover {
+        background: linear-gradient(135deg, var(--airbnb-dark-red) 0%, #E31C5F 100%);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(255, 90, 95, 0.35);
+    }
+    
+    .airbnb-btn:active {
+        transform: translateY(0);
+        box-shadow: 0 4px 10px rgba(255, 90, 95, 0.15);
+    }
+    
+    /* Error messages */
+    .airbnb-error {
+        background: #FFF8F8;
+        border: 1px solid #FFD3D3;
+        border-radius: 12px;
+        color: #C13515;
+    }
+    
+    .airbnb-error-icon {
+        color: var(--airbnb-red);
+    }
+    
+    /* Links */
+    .airbnb-link {
+        color: var(--airbnb-text);
+        text-decoration: underline;
+        font-weight: 600;
+        transition: color 0.2s ease;
+    }
+    
+    .airbnb-link:hover {
+        color: var(--airbnb-red);
+    }
+    
+    /* Label styling */
+    .airbnb-label {
+        display: block;
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--airbnb-text);
+        margin-bottom: 8px;
+    }
+    
+    /* Divider line */
+    .airbnb-divider {
+        height: 1px;
+        background: var(--airbnb-border);
+        margin: 24px 0;
+    }
+</style>
+</head>
+<body class="airbnb-bg min-h-screen font-sans">
+    <!-- Animated backgrounds blobs -->
+    <div class="bg-blob blob-1"></div>
+    <div class="bg-blob blob-2"></div>
+
+    <%-include('../partials/nav')%>
+    
+    <main class="flex items-center justify-center min-h-screen py-12 px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="airbnb-card max-w-md w-full p-8">
+            <!-- Logo/Title Section -->
+            <div class="text-center mb-8">
+                <div class="mx-auto w-16 h-16 airbnb-logo-circle rounded-full flex items-center justify-center mb-4">
+                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                    </svg>
+                </div>
+                <h1 class="text-3xl airbnb-title mb-2">Welcome Back</h1>
+                <p class="airbnb-subtitle">Sign in to continue your journey</p>
+            </div>
+            
+            <form action="/auth/login" method="POST" class="space-y-5">
+                <!-- Error Messages -->
+                <%if(errors && errors.length > 0){%>
+                    <div class="airbnb-error p-4 mb-4">
+                        <div class="flex items-start">
+                            <svg class="w-5 h-5 airbnb-error-icon mr-3 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+                            </svg>
+                            <div>
+                                <span class="font-semibold block mb-1">Please fix the following:</span>
+                                <ul class="list-disc pl-4 text-sm space-y-1">
+                                <% errors.forEach((error)=>{ %>
+                                    <li><%= error%></li>
+                                <% }) %>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                <%}%>
+                
+                <!-- Email Field -->
+                <div>
+                    <label for="email" class="airbnb-label">Email</label>
+                    <div class="airbnb-input-group">
+                        <svg class="input-icon h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"/>
+                        </svg>
+                        <input 
+                            type="email" 
+                            id="email"
+                            name="email"
+                            value="<%=oldInputs?oldInputs.email:''%>"
+                            placeholder="Email address" 
+                            class="airbnb-input" 
+                            required
+                        >
+                    </div>
+                </div>
+                
+                <!-- Password Field -->
+                <div>
+                    <div class="flex items-center justify-between mb-2">
+                        <label for="password" class="airbnb-label">Password</label>
+                    </div>
+                    <div class="airbnb-input-group">
+                        <svg class="input-icon h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                        </svg>
+                        <input 
+                            type="password" 
+                            id="password"
+                            name="password" 
+                            placeholder="Enter your password" 
+                            class="airbnb-input" 
+                            required
+                        >
+                    </div>
+                </div>
+                
+                <!-- Sign In Button -->
+                <button 
+                    type="submit" 
+                    class="airbnb-btn flex items-center justify-center mt-6"
+                >
+                    Sign In
+                    <svg class="ml-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+                    </svg>
+                </button>
+            </form>
+            
+            <div class="airbnb-divider"></div>
+            
+            <!-- Sign Up Link -->
+            <div class="text-center">
+                <p class="text-gray-600 text-sm">
+                    Don't have an account? 
+                    <a href="/auth/signup" class="airbnb-link">Sign up</a>
+                </p>
+            </div>
+        </div>
+    </main>
+</body>

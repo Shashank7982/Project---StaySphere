@@ -1,0 +1,297 @@
+<%-include('../partials/head')%>
+<style>
+    /* Airbnb-inspired Color Palette */
+    :root {
+        --airbnb-red: #FF5A5F;
+        --airbnb-dark-red: #E00007;
+        --airbnb-pink: #FF385C;
+        --airbnb-coral: #FC642D;
+        --airbnb-bg: #FFFFFF;
+        --airbnb-gray: #717171;
+        --airbnb-light-gray: #F7F7F7;
+        --airbnb-border: #DDDDDD;
+        --airbnb-text: #222222;
+        --airbnb-hover: #F5F5F5;
+    }
+    
+    /* Smooth gradient background - subtle warm tone */
+    .airbnb-bg {
+        background: linear-gradient(135deg, #FFF5F5 0%, #FFFFFF 50%, #FFF0F0 100%);
+    }
+    
+    /* Card styling */
+    .airbnb-card {
+        background: white;
+        border-radius: 16px;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+        border: 1px solid var(--airbnb-border);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    
+    .airbnb-card:hover {
+        box-shadow: 0 8px 28px rgba(0, 0, 0, 0.12);
+    }
+    
+    /* Logo circle with gradient */
+    .airbnb-logo-circle {
+        background: linear-gradient(135deg, var(--airbnb-red) 0%, var(--airbnb-pink) 100%);
+        box-shadow: 0 4px 12px rgba(255, 90, 95, 0.3);
+    }
+    
+    /* Typography */
+    .airbnb-title {
+        color: var(--airbnb-text);
+        font-weight: 600;
+        letter-spacing: -0.02em;
+    }
+    
+    .airbnb-subtitle {
+        color: var(--airbnb-gray);
+        font-weight: 400;
+    }
+    
+    /* Form inputs */
+    .airbnb-input {
+        width: 100%;
+        padding: 14px 16px;
+        border: 1px solid var(--airbnb-border);
+        border-radius: 8px;
+        font-size: 16px;
+        color: var(--airbnb-text);
+        background: white;
+        transition: all 0.2s ease;
+    }
+    
+    .airbnb-input:focus {
+        outline: none;
+        border-color: var(--airbnb-text);
+        box-shadow: 0 0 0 1px var(--airbnb-text);
+    }
+    
+    .airbnb-input::placeholder {
+        color: #999;
+    }
+    
+    /* Textarea specific */
+    textarea.airbnb-input {
+        resize: vertical;
+        min-height: 120px;
+    }
+    
+    /* File input styling */
+    .airbnb-file-input {
+        width: 100%;
+        padding: 12px 16px;
+        border: 2px dashed var(--airbnb-border);
+        border-radius: 8px;
+        font-size: 16px;
+        color: var(--airbnb-gray);
+        background: var(--airbnb-light-gray);
+        transition: all 0.2s ease;
+        cursor: pointer;
+    }
+    
+    .airbnb-file-input:hover {
+        border-color: var(--airbnb-red);
+        background: #FFF8F8;
+    }
+    
+    /* Primary Button - Airbnb style */
+    .airbnb-btn {
+        width: 100%;
+        padding: 14px 24px;
+        background: linear-gradient(135deg, var(--airbnb-red) 0%, var(--airbnb-pink) 100%);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        box-shadow: 0 2px 8px rgba(255, 90, 95, 0.3);
+    }
+    
+    .airbnb-btn:hover {
+        background: linear-gradient(135deg, var(--airbnb-dark-red) 0%, #E31C5F 100%);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(255, 90, 95, 0.4);
+    }
+    
+    .airbnb-btn:active {
+        transform: translateY(0);
+    }
+    
+    /* Label styling */
+    .airbnb-label {
+        display: block;
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--airbnb-text);
+        margin-bottom: 8px;
+    }
+    
+    /* Section divider */
+    .airbnb-section {
+        border-top: 1px solid var(--airbnb-border);
+        padding-top: 24px;
+        margin-top: 24px;
+    }
+    
+    /* Price input with currency symbol */
+    .airbnb-price-wrapper {
+        position: relative;
+    }
+    
+    .airbnb-price-wrapper::before {
+        content: '$';
+        position: absolute;
+        left: 16px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--airbnb-gray);
+        font-weight: 600;
+        font-size: 16px;
+    }
+    
+    .airbnb-price-input {
+        padding-left: 32px;
+    }
+    
+    /* Rating stars display */
+    .airbnb-rating-hint {
+        font-size: 12px;
+        color: var(--airbnb-gray);
+        margin-top: 4px;
+    }
+</style>
+</head>
+<body class="airbnb-bg min-h-screen font-sans">
+    <!-- Header -->
+    <%-include('../partials/nav')%>
+
+    <main class="container mx-auto mt-8 p-4 sm:p-8">
+        <div class="airbnb-card max-w-2xl mx-auto p-6 sm:p-8">
+            <!-- Header Section -->
+            <div class="text-center mb-8">
+                <div class="mx-auto w-16 h-16 airbnb-logo-circle rounded-full flex items-center justify-center mb-4">
+                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+                    </svg>
+                </div>
+                <h1 class="text-3xl airbnb-title mb-2"><%=editing==true?'Update':'Register'%> your home</h1>
+                <p class="airbnb-subtitle"><%=editing==true?'Update your property details':'List your property for guests to discover'%></p>
+            </div>
+
+            <form action="<%=editing==true?'/host/editHome':'/host/addHome'%>" method="POST" class="space-y-5" enctype="multipart/form-data">
+                <input type="hidden" name="id" value="<%=editing==true?home._id:''%>">
+                
+                <!-- House Name -->
+                <div>
+                    <label class="airbnb-label">House Name</label>
+                    <input 
+                        type="text" 
+                        name="houseName" 
+                        value='<%= editing==true ? home.houseName:""%>'  
+                        placeholder="Give your home a catchy name" 
+                        class="airbnb-input"
+                        required
+                    >
+                </div>
+
+                <!-- Price -->
+                <div>
+                    <label class="airbnb-label">Price per Night</label>
+                    <div class="airbnb-price-wrapper">
+                        <input 
+                            type="number" 
+                            name="price" 
+                            value='<%= editing==true ? home.price:""%>'  
+                            placeholder="0" 
+                            class="airbnb-input airbnb-price-input"
+                            min="0"
+                            step="0.01"
+                            required
+                        >
+                    </div>
+                </div>
+
+                <!-- Location -->
+                <div>
+                    <label class="airbnb-label">Location</label>
+                    <input 
+                        type="text" 
+                        name="location" 
+                        value='<%= editing==true ? home.location:""%>'  
+                        placeholder="City, Country" 
+                        class="airbnb-input"
+                        required
+                    >
+                </div>
+
+                <!-- Rating -->
+                <div>
+                    <label class="airbnb-label">Rating</label>
+                    <input 
+                        type="number" 
+                        name="rating" 
+                        value='<%= editing==true ? home.rating:""%>'  
+                        placeholder="4.5" 
+                        class="airbnb-input"
+                        min="0"
+                        max="5"
+                        step="0.1"
+                    >
+                    <p class="airbnb-rating-hint">Enter a rating between 0 and 5 (e.g., 4.5)</p>
+                </div>
+
+                <!-- Photo Upload -->
+                <div>
+                    <label class="airbnb-label">House Photo</label>
+                    <input 
+                        type="file" 
+                        name="photo"   
+                        class="airbnb-file-input" 
+                        accept="image/jpg,image/jpeg,image/png"
+                    >
+                    <p class="airbnb-rating-hint mt-2">Upload a high-quality photo of your property</p>
+                </div>
+
+                <!-- Description -->
+                <div>
+                    <label class="airbnb-label">Description</label>
+                    <textarea 
+                        name="description"   
+                        placeholder="Tell guests what makes your home special. Describe the space, amenities, and neighborhood." 
+                        class="airbnb-input"
+                    ><%= editing==true ? home.description:""%></textarea>
+                </div>
+
+                <!-- Rules PDF -->
+                <div>
+                    <label for="rulesPdf" class="airbnb-label">House Rules (PDF)</label>
+                    <input 
+                        type="file" 
+                        name="rulesPdf"  
+                        class="airbnb-file-input" 
+                        accept="application/pdf"
+                    >
+                    <p class="airbnb-rating-hint mt-2">Optional: Upload house rules or guidelines for guests</p>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="pt-4">
+                    <button 
+                        type="submit" 
+                        class="airbnb-btn flex items-center justify-center"
+                    >
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                        </svg>
+                        <%=editing==true?'Update Property':'List Your Property'%>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </main>
+</body>
+</html>

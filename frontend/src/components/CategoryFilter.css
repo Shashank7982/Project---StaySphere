@@ -1,0 +1,39 @@
+.ss-filter { overflow: hidden; }
+
+.ss-filter__track {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+}
+
+.ss-filter__btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 12px 20px;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  font-weight: 500;
+  white-space: nowrap;
+  transition: all var(--transition-fast);
+  cursor: pointer;
+  min-width: 68px;
+}
+.ss-filter__btn:hover {
+  color: var(--text-primary);
+  background: rgba(255,255,255,0.06);
+  border-color: var(--border-card);
+}
+.ss-filter__btn.active {
+  color: var(--text-white);
+  background: rgba(249,115,22,0.14);
+  border-color: rgba(249,115,22,0.4);
+}
+
+.ss-filter__icon { font-size: 1.3rem; line-height: 1; }
+.ss-filter__label { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.02em; }

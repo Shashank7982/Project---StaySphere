@@ -1,0 +1,70 @@
+.ss-detail__hero {
+  position: relative;
+  height: 55vh;
+  min-height: 380px;
+  overflow: hidden;
+}
+.ss-detail__img {
+  width: 100%; height: 100%; object-fit: cover;
+}
+.ss-detail__hero-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(8,12,20,0.4) 0%, rgba(8,12,20,0.2) 60%, rgba(8,12,20,0.7) 100%);
+}
+.ss-detail__back {
+  position: absolute; top: calc(var(--nav-height) + 16px); left: 24px;
+  z-index: 5;
+}
+
+.ss-detail__body {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 48px;
+  padding-top: 48px;
+  padding-bottom: 80px;
+  align-items: start;
+}
+@media (max-width: 960px) {
+  .ss-detail__body { grid-template-columns: 1fr; }
+}
+
+.ss-detail__header {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  margin-bottom: 24px; flex-wrap: wrap; gap: 16px;
+}
+.ss-detail__badges { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+.ss-detail__title { font-size: clamp(1.6rem, 3vw, 2.5rem); font-weight: 800; color: var(--text-white); }
+.ss-detail__rating {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 1.2rem; font-weight: 700; color: var(--text-primary);
+}
+
+.ss-detail__divider { height: 1px; background: var(--border-subtle); margin: 24px 0; }
+
+.ss-detail__section { margin-bottom: 32px; }
+.ss-detail__section h2 {
+  font-size: 1.1rem; font-weight: 700; color: var(--text-primary);
+  margin-bottom: 12px;
+}
+.ss-detail__section p {
+  color: var(--text-secondary); line-height: 1.75; font-size: 0.95rem;
+}
+
+/* Booking card */
+.ss-detail__booking {
+  border-radius: var(--radius-xl);
+  padding: 28px;
+  position: sticky;
+  top: calc(var(--nav-height) + 24px);
+  display: flex; flex-direction: column; gap: 16px;
+}
+
+.ss-detail__price-row { display: flex; align-items: baseline; gap: 6px; }
+.ss-detail__price { font-size: 2rem; font-weight: 800; color: var(--text-white); font-family: 'Outfit', sans-serif; }
+.ss-detail__price-unit { color: var(--text-muted); font-size: 0.9rem; }
+
+.ss-detail__booking-inputs { display: flex; flex-direction: column; gap: 12px; }
+
+.ss-detail__booking-note {
+  text-align: center; font-size: 0.78rem; color: var(--text-muted);
+}

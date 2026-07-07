@@ -1,0 +1,450 @@
+<%-include('../partials/head')%>
+<!-- Font Awesome for icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+    /* Airbnb-inspired Color Palette */
+    :root {
+        --airbnb-red: #FF5A5F;
+        --airbnb-dark-red: #E00007;
+        --airbnb-pink: #FF385C;
+        --airbnb-coral: #FC642D;
+        --airbnb-bg: #FFFFFF;
+        --airbnb-gray: #717171;
+        --airbnb-light-gray: #F7F7F7;
+        --airbnb-border: #DDDDDD;
+        --airbnb-text: #222222;
+        --airbnb-hover: #F5F5F5;
+    }
+    
+    /* Smooth gradient background - subtle warm tone */
+    .airbnb-bg {
+        background: linear-gradient(135deg, #FFF5F5 0%, #FFFFFF 50%, #FFF0F0 100%);
+    }
+    
+    /* Card styling */
+    .airbnb-card {
+        background: white;
+        border-radius: 16px;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+        border: 1px solid var(--airbnb-border);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    
+    .airbnb-card:hover {
+        box-shadow: 0 8px 28px rgba(0, 0, 0, 0.12);
+    }
+    
+    /* Logo circle with gradient */
+    .airbnb-logo-circle {
+        background: linear-gradient(135deg, var(--airbnb-red) 0%, var(--airbnb-pink) 100%);
+        box-shadow: 0 4px 12px rgba(255, 90, 95, 0.3);
+    }
+    
+    /* Typography */
+    .airbnb-title {
+        color: var(--airbnb-text);
+        font-weight: 600;
+        letter-spacing: -0.02em;
+    }
+    
+    .airbnb-subtitle {
+        color: var(--airbnb-gray);
+        font-weight: 400;
+    }
+    
+    /* Form inputs */
+    .airbnb-input-group {
+        position: relative;
+    }
+    
+    .airbnb-input {
+        width: 100%;
+        padding: 14px 16px 14px 48px;
+        border: 1px solid var(--airbnb-border);
+        border-radius: 8px;
+        font-size: 16px;
+        color: var(--airbnb-text);
+        background: white;
+        transition: all 0.2s ease;
+    }
+    
+    .airbnb-input:focus {
+        outline: none;
+        border-color: var(--airbnb-text);
+        box-shadow: 0 0 0 1px var(--airbnb-text);
+    }
+    
+    .airbnb-input::placeholder {
+        color: #999;
+    }
+    
+    /* Input icons */
+    .input-icon {
+        position: absolute;
+        left: 16px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--airbnb-gray);
+        pointer-events: none;
+    }
+    
+    /* Primary Button - Airbnb style */
+    .airbnb-btn {
+        width: 100%;
+        padding: 14px 24px;
+        background: linear-gradient(135deg, var(--airbnb-red) 0%, var(--airbnb-pink) 100%);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        box-shadow: 0 2px 8px rgba(255, 90, 95, 0.3);
+    }
+    
+    .airbnb-btn:hover {
+        background: linear-gradient(135deg, var(--airbnb-dark-red) 0%, #E31C5F 100%);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(255, 90, 95, 0.4);
+    }
+    
+    .airbnb-btn:active {
+        transform: translateY(0);
+    }
+    
+    /* Error messages */
+    .airbnb-error {
+        background: #FFF8F8;
+        border: 1px solid #FFB8B8;
+        border-radius: 8px;
+        color: #C13515;
+    }
+    
+    .airbnb-error-icon {
+        color: var(--airbnb-red);
+    }
+    
+    /* Links */
+    .airbnb-link {
+        color: var(--airbnb-text);
+        text-decoration: underline;
+        font-weight: 600;
+        transition: color 0.2s ease;
+    }
+    
+    .airbnb-link:hover {
+        color: var(--airbnb-red);
+    }
+    
+    /* Label styling */
+    .airbnb-label {
+        display: block;
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--airbnb-text);
+        margin-bottom: 8px;
+    }
+    
+    /* Radio buttons */
+    .airbnb-radio-group {
+        background: var(--airbnb-light-gray);
+        border-radius: 8px;
+        padding: 16px;
+    }
+    
+    .airbnb-radio {
+        appearance: none;
+        width: 20px;
+        height: 20px;
+        border: 2px solid var(--airbnb-border);
+        border-radius: 50%;
+        cursor: pointer;
+        position: relative;
+        transition: all 0.2s ease;
+    }
+    
+    .airbnb-radio:checked {
+        border-color: var(--airbnb-text);
+        background: var(--airbnb-text);
+    }
+    
+    .airbnb-radio:checked::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 8px;
+        height: 8px;
+        background: white;
+        border-radius: 50%;
+    }
+    
+    /* Checkbox */
+    .airbnb-checkbox {
+        appearance: none;
+        width: 20px;
+        height: 20px;
+        border: 2px solid var(--airbnb-border);
+        border-radius: 4px;
+        cursor: pointer;
+        position: relative;
+        transition: all 0.2s ease;
+        flex-shrink: 0;
+    }
+    
+    .airbnb-checkbox:checked {
+        background: var(--airbnb-red);
+        border-color: var(--airbnb-red);
+    }
+    
+    .airbnb-checkbox:checked::after {
+        content: '\f00c';
+        font-family: 'Font Awesome 6 Free';
+        font-weight: 900;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: white;
+        font-size: 12px;
+    }
+    
+    /* Terms link */
+    .airbnb-terms-link {
+        color: var(--airbnb-red);
+        text-decoration: underline;
+        font-weight: 600;
+        cursor: pointer;
+    }
+    
+    .airbnb-terms-link:hover {
+        color: var(--airbnb-dark-red);
+    }
+    
+    /* Checkbox container */
+    .airbnb-checkbox-container {
+        background: var(--airbnb-light-gray);
+        border-radius: 8px;
+        padding: 16px;
+    }
+    
+    /* Divider line */
+    .airbnb-divider {
+        height: 1px;
+        background: var(--airbnb-border);
+        margin: 24px 0;
+    }
+</style>
+</head>
+<body class="airbnb-bg min-h-screen font-sans">
+    <%-include('../partials/nav')%>
+    
+    <main class="flex items-center justify-center min-h-screen py-12 px-4 sm:px-6 lg:px-8">
+        <div class="airbnb-card max-w-2xl w-full p-8">
+            <!-- Logo/Title Section -->
+            <div class="text-center mb-8">
+                <div class="mx-auto w-16 h-16 airbnb-logo-circle rounded-full flex items-center justify-center mb-4">
+                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/>
+                    </svg>
+                </div>
+                <h1 class="text-3xl airbnb-title mb-2">Create Your Account</h1>
+                <p class="airbnb-subtitle">Join our community of travelers and hosts</p>
+            </div>
+            
+            <form action="/auth/signup" method="POST" class="space-y-5">
+                <!-- Error Messages -->
+                <% if (errors && errors.length > 0) { %>
+                    <div class="airbnb-error p-4 mb-4">
+                        <div class="flex items-start">
+                            <svg class="w-5 h-5 airbnb-error-icon mr-3 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+                            </svg>
+                            <div>
+                                <span class="font-semibold block mb-1">Please fix the following:</span>
+                                <ul class="list-disc pl-4 text-sm space-y-1">
+                                <% errors.forEach(function(error) { %>
+                                    <li><%= error.msg %></li>
+                                <% }) %>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                <% } %>
+
+                <% function fieldError(field){ 
+                    if(!errors) return null; 
+                    for(var i=0;i<errors.length;i++){ 
+                        var e=errors[i]; 
+                        if(e && e.param === field) return e.msg; 
+                    } 
+                    return null; 
+                } %>
+
+                <!-- Name Fields Row -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- First Name Field -->
+                    <div>
+                        <label for="firstName" class="airbnb-label">First Name</label>
+                        <div class="airbnb-input-group">
+                            <svg class="input-icon h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                            </svg>
+                            <input 
+                                type="text" 
+                                id="firstName"
+                                name="firstName" 
+                                value="<%= oldInputs.firstName || '' %>" 
+                                placeholder="First name"
+                                class="airbnb-input" 
+                                required
+                            >
+                        </div>
+                    </div>
+
+                    <!-- Last Name Field -->
+                    <div>
+                        <label for="lastName" class="airbnb-label">Last Name</label>
+                        <div class="airbnb-input-group">
+                            <svg class="input-icon h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                            </svg>
+                            <input 
+                                type="text" 
+                                id="lastName"
+                                name="lastName" 
+                                value="<%= oldInputs.lastName || '' %>" 
+                                placeholder="Last name"
+                                class="airbnb-input"
+                            >
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Email Field -->
+                <div>
+                    <label for="email" class="airbnb-label">Email</label>
+                    <div class="airbnb-input-group">
+                        <svg class="input-icon h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"/>
+                        </svg>
+                        <input 
+                            type="email" 
+                            id="email"
+                            name="email" 
+                            value="<%= oldInputs.email || '' %>" 
+                            placeholder="Email address"
+                            class="airbnb-input" 
+                            required
+                        >
+                    </div>
+                </div>
+
+                <!-- Password Field -->
+                <div>
+                    <label for="password" class="airbnb-label">Password</label>
+                    <div class="airbnb-input-group">
+                        <svg class="input-icon h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                        </svg>
+                        <input 
+                            type="password" 
+                            id="password"
+                            name="password" 
+                            placeholder="Create a password"
+                            class="airbnb-input" 
+                            required
+                        >
+                    </div>
+                </div>
+
+                <!-- Confirm Password Field -->
+                <div>
+                    <label for="confirmPassword" class="airbnb-label">Confirm Password</label>
+                    <div class="airbnb-input-group">
+                        <svg class="input-icon h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                        </svg>
+                        <input 
+                            type="password" 
+                            id="confirmPassword"
+                            name="confirmPassword" 
+                            placeholder="Confirm your password"
+                            class="airbnb-input" 
+                            required
+                        >
+                    </div>
+                </div>
+
+                <!-- User Type -->
+                <div class="airbnb-radio-group">
+                    <label class="airbnb-label mb-3">I want to join as:</label>
+                    <div class="flex gap-6">
+                        <label class="inline-flex items-center cursor-pointer">
+                            <input 
+                                type="radio" 
+                                name="userType" 
+                                value="guest" 
+                                <%= oldInputs.userType === 'guest' ? 'checked' : '' %> 
+                                class="airbnb-radio" 
+                                required
+                            >
+                            <span class="ml-3 text-gray-700 font-medium">Guest</span>
+                        </label>
+                        <label class="inline-flex items-center cursor-pointer">
+                            <input 
+                                type="radio" 
+                                name="userType" 
+                                value="host" 
+                                <%= oldInputs.userType === 'host' ? 'checked' : '' %> 
+                                class="airbnb-radio" 
+                                required
+                            >
+                            <span class="ml-3 text-gray-700 font-medium">Host</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Terms and Conditions -->
+                <div class="airbnb-checkbox-container flex items-start">
+                    <input 
+                        type="checkbox" 
+                        id="termsAccepted"
+                        name="termsAccepted" 
+                        <%= oldInputs.termsAccepted ? 'checked' : '' %> 
+                        class="airbnb-checkbox mt-0.5" 
+                        required
+                    >
+                    <label for="termsAccepted" class="ml-3 text-sm text-gray-700 leading-relaxed">
+                        I agree to the 
+                        <span class="airbnb-terms-link">Terms of Service</span> and 
+                        <span class="airbnb-terms-link">Privacy Policy</span>
+                    </label>
+                </div>
+
+                <!-- Register Button -->
+                <button 
+                    type="submit" 
+                    class="airbnb-btn flex items-center justify-center mt-6"
+                >
+                    Create Account
+                    <svg class="ml-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+                    </svg>
+                </button>
+            </form>
+            
+            <div class="airbnb-divider"></div>
+            
+            <!-- Login Link -->
+            <div class="text-center">
+                <p class="text-gray-600 text-sm">
+                    Already have an account? 
+                    <a href="/auth/login" class="airbnb-link">Log in</a>
+                </p>
+            </div>
+        </div>
+    </main>
+</body>
