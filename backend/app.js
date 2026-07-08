@@ -53,19 +53,8 @@ app.use((req, res, next) => {
     next();
 });
 
-// Multer storage configuration
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        if (file.fieldname === 'photo') {
-            cb(null, 'uploads/images/');
-        } else {
-            cb(null, 'uploads/pdfs/');
-        }
-    },
-    filename: function (req, file, cb) {
-        cb(null, Date.now() + "-" + file.originalname);
-    }
-});
+// Multer storage configuration using Memory Storage
+const storage = multer.memoryStorage();
 
 const fileFilter = function (req, file, cb) {
     if (file.fieldname === 'photo') {

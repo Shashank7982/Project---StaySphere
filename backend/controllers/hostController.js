@@ -1,46 +1,52 @@
 // CORE MODULES
 const mongoose = require('mongoose');
-const path = require('path');
-const fs = require('fs');
 // LOCAL MODULES
 const Home = require('../models/home');
-const rootDir = require('../utils/pathUtils');
+const { uploadToCloudinary, deleteFromCloudinary } = require('../config/cloudinary');
 
 exports.getAddHome = (req, res, next) => {
     res.json({ editing: false, isLoggedIn: req.isLoggedIn, user: req.session.user || null });
 };
 
-exports.postAddHome = (req, res, next) => {
+exports.postAddHome = async (req, res, next) => {
     const { houseName, location, price, rating, description, category, amenities, reviews } = req.body;
-    if (!req.files['photo']) {
+    if (!req.files || !req.files['photo'] || !req.files['photo'][0]) {
         return res.status(400).json({ error: 'Photo is required' });
     }
-    const photoPath = req.files.photo ? req.files.photo[0].path : null;
-    const rulesPdfPath = req.files.rulesPdf ? req.files.rulesPdf[0].path : null;
-    const photo = photoPath ? ('/' + photoPath).replace(/\\/g, '/') : null;
-    const rulesPdf = rulesPdfPath ? ('/' + rulesPdfPath).replace(/\\/g, '/') : '';
 
-    let parsedAmenities = [];
-    let parsedReviews = [];
     try {
-        if (amenities) parsedAmenities = JSON.parse(amenities);
-        if (reviews) parsedReviews = JSON.parse(reviews);
-    } catch (e) {
-        console.error("Error parsing amenities/reviews", e);
-    }
+        let photoUrl = null;
+        let rulesPdfUrl = '';
 
-    const home = new Home({
-        houseName, price, location, rating, photo, description, rulesPdf, category,
-        amenities: parsedAmenities, reviews: parsedReviews
-    });
-    home.save()
-        .then(() => {
-            res.status(201).json({ message: 'Home added successfully' });
-        })
-        .catch(err => {
-            console.log("cant add home", err);
-            res.status(500).json({ error: 'Failed to add home' });
+        if (req.files.photo && req.files.photo[0]) {
+            const photoResult = await uploadToCloudinary(req.files.photo[0].buffer, 'staysphere/photos', 'image');
+            photoUrl = photoResult.secure_url;
+        }
+
+        if (req.files.rulesPdf && req.files.rulesPdf[0]) {
+            const pdfResult = await uploadToCloudinary(req.files.rulesPdf[0].buffer, 'staysphere/pdfs', 'raw');
+            rulesPdfUrl = pdfResult.secure_url;
+        }
+
+        let parsedAmenities = [];
+        let parsedReviews = [];
+        try {
+            if (amenities) parsedAmenities = JSON.parse(amenities);
+            if (reviews) parsedReviews = JSON.parse(reviews);
+        } catch (e) {
+            console.error("Error parsing amenities/reviews", e);
+        }
+
+        const home = new Home({
+            houseName, price, location, rating, photo: photoUrl, description, rulesPdf: rulesPdfUrl, category,
+            amenities: parsedAmenities, reviews: parsedReviews
         });
+        await home.save();
+        res.status(201).json({ message: 'Home added successfully' });
+    } catch (err) {
+        console.error("cant add home", err);
+        res.status(500).json({ error: 'Failed to add home' });
+    }
 };
 
 exports.getEditHome = (req, res, next) => {
@@ -83,17 +89,19 @@ exports.postEditHome = async (req, res, next) => {
         }
 
         if (req.files && req.files.photo && req.files.photo[0]) {
-            const oldPath = path.join(rootDir, home.photo.replace('/uploads/', 'uploads/'));
-            fs.unlink(oldPath, err => { if (err) console.log("error deleting file", err); });
-            home.photo = '/uploads/images/' + req.files.photo[0].filename;
+            if (home.photo) {
+                await deleteFromCloudinary(home.photo);
+            }
+            const photoResult = await uploadToCloudinary(req.files.photo[0].buffer, 'staysphere/photos', 'image');
+            home.photo = photoResult.secure_url;
         }
 
         if (req.files && req.files.rulesPdf && req.files.rulesPdf[0]) {
             if (home.rulesPdf) {
-                const oldPath = path.join(rootDir, home.rulesPdf.replace('/uploads/', 'uploads/'));
-                fs.unlink(oldPath, err => { if (err) console.log("error deleting file", err); });
+                await deleteFromCloudinary(home.rulesPdf);
             }
-            home.rulesPdf = '/uploads/pdfs/' + req.files.rulesPdf[0].filename;
+            const pdfResult = await uploadToCloudinary(req.files.rulesPdf[0].buffer, 'staysphere/pdfs', 'raw');
+            home.rulesPdf = pdfResult.secure_url;
         }
 
         await home.save();
@@ -117,8 +125,12 @@ exports.postDeleteHome = async (req, res, next) => {
         if (!home) {
             return res.status(404).json({ error: 'Home not found' });
         }
-        const oldPath = path.join(rootDir, home.photo.replace('/uploads/', 'uploads/'));
-        fs.unlink(oldPath, err => { if (err) console.log("error while deleting file", err); });
+        if (home.photo) {
+            await deleteFromCloudinary(home.photo);
+        }
+        if (home.rulesPdf) {
+            await deleteFromCloudinary(home.rulesPdf);
+        }
         await Home.findOneAndDelete({ _id: homeId });
         res.json({ message: 'Home deleted successfully' });
     } catch (err) {
