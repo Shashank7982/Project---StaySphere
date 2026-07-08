@@ -3,7 +3,11 @@ const dns = require('dns');
 require('dotenv').config();
 
 // Force Google DNS to fix Atlas SRV connection issues
-dns.setServers(['8.8.8.8', '8.8.4.4']);
+try {
+    dns.setServers(['8.8.8.8', '8.8.4.4']);
+} catch (err) {
+    console.warn("DNS setServers failed:", err.message);
+}
 
 const connectDB = async function() {
     try {

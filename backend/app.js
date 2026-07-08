@@ -17,7 +17,11 @@ const rootDir = require('./utils/pathUtils');
 const errorController = require('./controllers/errors');
 
 // Fix for MongoDB Atlas connection issue in some networks
-dns.setServers(['8.8.8.8', '8.8.4.4']);
+try {
+    dns.setServers(['8.8.8.8', '8.8.4.4']);
+} catch (err) {
+    console.warn("DNS setServers failed:", err.message);
+}
 const DB_PATH = process.env.MONGO_URL;
 
 // creating session store
