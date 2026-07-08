@@ -6,7 +6,8 @@
     "start": "node app.js",
     "serve": "nodemon app.js",
     "dev": "nodemon app.js",
-    "seed": "node config/seedDatabase.js"
+    "seed": "node config/seedDatabase.js",
+    "build": "echo 'No build step required'"
   },
   "keywords": [],
   "author": "",
