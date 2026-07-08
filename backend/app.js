@@ -111,8 +111,8 @@ app.use((req, res, next) => {
 app.use("/api/auth", authRouter);
 app.use("/api/store", storeRouter);
 
-// Auth middleware for protected API routes
-app.use((req, res, next) => {
+// Auth middleware for protected API routes (only applies to host paths)
+app.use("/api/host", (req, res, next) => {
     if (req.isLoggedIn) {
         next();
     } else {
