@@ -37,6 +37,9 @@ store.on('error', function(error) {
 // creating app
 const app = express();
 
+// Trust proxy for secure cookies behind Vercel reverse proxy
+app.set('trust proxy', 1);
+
 // Parse JSON and URL-encoded bodies
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
