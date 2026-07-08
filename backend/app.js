@@ -50,7 +50,8 @@ app.use((req, res, next) => {
         process.env.FRONTEND_URL
     ].filter(Boolean);
 
-    if (allowedOrigins.includes(origin)) {
+    // Dynamically allow local hosts and any Vercel domain to prevent CORS blocks
+    if (origin && (allowedOrigins.includes(origin) || origin.endsWith('.vercel.app'))) {
         res.setHeader('Access-Control-Allow-Origin', origin);
     }
     res.setHeader('Access-Control-Allow-Credentials', 'true');
