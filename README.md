@@ -1,245 +1,105 @@
-# StaySphere 🏠
+# StaySphere 🏡
 
-A modern, full-stack property rental platform built with Node.js, Express, MongoDB, and TailwindCSS. StaySphere offers a beautiful, Airbnb-inspired interface with server-side rendering for optimal performance.
-
----
-
-## ✨ Features
-
-- 🔐 **User Authentication** - Secure registration and login with bcrypt password hashing
-- 👥 **Dual User Roles** - Separate interfaces for Guests and Hosts
-- 🏡 **Property Listings** - Browse 60+ beautiful properties worldwide
-- ❤️ **Favorites System** - Save and manage your favorite properties
-- 📸 **Image Upload** - Hosts can upload property photos with Multer
-- 🎨 **Modern UI** - Clean, responsive design with TailwindCSS
-- 🔄 **Server-Side Rendering** - Fast page loads with EJS templates
-- 💾 **Session Management** - Persistent user sessions with MongoDB
+StaySphere is a premium, full-stack rental booking platform designed to connect hosts and guests. The application is built using a modern **React (Vite)** frontend and a **Node.js / Express** backend, featuring image and document upload integration via **Cloudinary**, and hosted serverlessly on **Vercel** with a unified single-domain setup.
 
 ---
 
-## 🚀 Quick Start
+## 🚀 Key Features
 
-### Prerequisites
-- Node.js (v14 or higher)
-- MongoDB (local or Atlas)
-- npm or yarn
-
-### Installation
-
-1. **Clone the repository**
-```bash
-git clone https://github.com/yourusername/staysphere.git
-cd staysphere
-```
-
-2. **Install dependencies**
-```bash
-npm install
-```
-
-3. **Configure environment variables**
-
-Create a `.env` file in the root directory:
-```env
-MONGO_URL=mongodb://localhost:27017/staysphere
-SESSION_SECRET=your-secret-key-change-this-in-production
-PORT=3000
-```
-
-4. **Seed the database** (Optional - adds 60 sample properties)
-```bash
-npm run seed
-```
-
-5. **Run the application**
-
-For development (with auto-reload and Tailwind watch):
-```bash
-npm run dev
-```
-
-For production:
-```bash
-npm start
-```
-
-Visit `http://localhost:3000/store` to see your app! 🎉
+* **Secure Authentication**: Session-based login and registration featuring encrypted passwords (bcryptjs) and automatic cross-origin cookies.
+* **Property Listings**: Multi-category property filtering (Beachfront, Cabins, Amazing Views, Last Minute, etc.).
+* **Media Uploads**: Dynamic hosting of listing photos and house rule PDFs using memory-buffered **Cloudinary API** uploads.
+* **Booking & Reviews**: Real-time room booking calculations and guest review systems.
+* **First-Party Cookies**: Configured behind Vercel reverse-proxies to prevent Chrome/Safari third-party cookie blocking.
 
 ---
 
-## 📁 Project Structure
-
-```
-staysphere/
-├── app.js                 # Main application entry point
-├── package.json           # Dependencies and scripts
-├── config/
-│   ├── database.js        # MongoDB connection
-│   └── seedDatabase.js    # Database seeding script
-├── controllers/           # Route logic and business logic
-│   ├── authController.js
-│   ├── storeController.js
-│   └── hostController.js
-├── models/                # MongoDB schemas
-│   ├── home.js
-│   ├── user.js
-│   └── favourites.js
-├── routes/                # Express routes
-│   ├── authRouter.js
-│   ├── storeRouter.js
-│   └── hostRouter.js
-├── views/                 # EJS templates
-│   ├── partials/          # Reusable components
-│   ├── store/             # Guest-facing pages
-│   ├── host/              # Host dashboard pages
-│   └── auth/              # Login/signup pages
-├── public/                # Static assets
-│   └── output.css         # Compiled Tailwind CSS
-└── uploads/               # User-uploaded files
-    ├── images/
-    └── pdfs/
-```
-
----
-
-## 🛠️ Tech Stack
-
-### Backend
-- **Node.js** - Runtime environment
-- **Express.js** - Web framework
-- **MongoDB** - NoSQL database
-- **Mongoose** - MongoDB ODM
-- **bcryptjs** - Password hashing
-- **express-session** - Session management
-- **express-validator** - Input validation
-- **Multer** - File upload handling
+## 🛠️ Technology Stack
 
 ### Frontend
-- **EJS** - Server-side templating
-- **TailwindCSS** - Utility-first CSS framework
-- **Vanilla JavaScript** - Client-side interactions
+* **Core**: React.js, JavaScript (ES6+), Vite
+* **Styling**: Vanilla CSS (Tailwind CSS custom components)
+* **API Calls**: Axios (pre-configured with `withCredentials: true` for sessions)
+
+### Backend
+* **Runtime**: Node.js, Express.js
+* **Database**: MongoDB Atlas, Mongoose ODM
+* **Session Store**: MongoDB Session Store (`connect-mongodb-session`)
+* **Storage & Uploads**: Multer (Memory Storage) & Cloudinary SDK
+
+### Deployment
+* **Platform**: Vercel (Unified Monorepo Routing)
 
 ---
 
-## 📝 Available Scripts
+## 📁 Directory Structure
 
-| Command | Description |
-|---------|-------------|
-| `npm start` | Run the app in production mode |
-| `npm run dev` | Run with nodemon + Tailwind watch |
-| `npm run serve` | Run server with nodemon |
-| `npm run tailwind` | Watch and compile Tailwind CSS |
-| `npm run build` | Build production CSS |
-| `npm run seed` | Populate database with sample data |
-
----
-
-## 🔐 Sample Accounts
-
-After running the seed script, you can login with:
-
-**Guest Account:**
-- Email: `guest@example.com`
-- Password: `password123`
-
-**Host Account:**
-- Email: `host@example.com`
-- Password: `password123`
+```
+├── api/                  # Vercel serverless API entry point (index.js)
+├── backend/              # Node.js / Express API server logic
+│   ├── config/           # Database config & Cloudinary configurations
+│   ├── controllers/      # MVC controllers (Auth, Home, Host, Booking)
+│   ├── models/           # Mongoose schemas (User, Home, Booking)
+│   └── app.js            # Express application setup
+├── frontend/             # Vite + React client application
+│   ├── src/
+│   │   ├── api/          # Axios instance configuration
+│   │   ├── components/   # Reusable UI components
+│   │   ├── context/      # React Authentication Context
+│   │   └── pages/        # Router pages (Login, Register, Home, Listing)
+└── vercel.json           # Unified production routing configuration
+```
 
 ---
 
-## 🌟 Key Features Breakdown
+## ⚙️ Environment Configuration
 
-### For Guests
-- Browse property listings with beautiful images
-- Filter properties by category
-- View detailed property information
-- Save favorite properties
-- Manage bookings (coming soon)
+Create a `.env` file inside the `backend/` directory (and add these variables to your Vercel Project Settings):
 
-### For Hosts
-- Add new property listings
-- Upload property photos and documents
-- Edit existing listings
-- Manage property availability
-- View booking requests (coming soon)
+```env
+MONGO_URL=mongodb+srv://...           # MongoDB Connection String
+SESSION_SECRET=your_session_secret    # Express Session encryption secret key
+PORT=3000                             # Local API port
+CLOUDINARY_CLOUD_NAME=your_cloud_name # Cloudinary Cloud Name
+CLOUDINARY_API_KEY=your_api_key       # Cloudinary API Key
+CLOUDINARY_API_SECRET=your_api_secret # Cloudinary Secret
+```
 
 ---
 
-## 🎨 Design Philosophy
+## 💻 Local Development Setup
 
-StaySphere follows modern web design principles:
-- **Clean & Minimal** - Uncluttered interface focusing on content
-- **Responsive** - Works seamlessly on desktop, tablet, and mobile
-- **Accessible** - Semantic HTML and ARIA labels
-- **Fast** - Server-side rendering for optimal performance
-- **Consistent** - Unified design system with reusable components
+1. **Clone the Repository**:
+   ```bash
+   git clone https://github.com/Shashank7982/Project---StaySphere.git
+   cd Project---StaySphere
+   ```
 
----
+2. **Set up the Backend**:
+   ```bash
+   cd backend
+   npm install
+   # Create your .env file
+   node config/seedDatabase.js   # Seeds database with 150 properties
+   npm start
+   ```
 
-## 🔒 Security Features
+3. **Set up the Frontend**:
+   ```bash
+   cd ../frontend
+   npm install
+   npm run dev
+   ```
 
-- Password hashing with bcrypt (12 salt rounds)
-- Session-based authentication
-- CSRF protection ready
-- Input validation and sanitization
-- Secure file upload with type checking
-- Environment variable protection
-
----
-
-## 🚧 Roadmap
-
-- [ ] Payment integration (Stripe/PayPal)
-- [ ] Real-time booking system
-- [ ] Review and rating system
-- [ ] Advanced search filters
-- [ ] Email notifications
-- [ ] Admin dashboard
-- [ ] Multi-language support
-- [ ] Mobile app (React Native)
+4. Open your browser and navigate to `http://localhost:5173`.
 
 ---
 
-## 🤝 Contributing
+## 🌍 Vercel Production Deployment
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+To host this project on Vercel under a **single domain** (avoiding cross-origin cookie issues):
 
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
----
-
-## 📄 License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
----
-
-## 👨‍💻 Author
-
-**Your Name**
-- GitHub: [@yourusername](https://github.com/yourusername)
-
----
-
-## 🙏 Acknowledgments
-
-- Inspired by Airbnb's design and user experience
-- Built as a learning project to master full-stack development
-- Thanks to the open-source community for amazing tools and libraries
-
----
-
-## 📧 Contact
-
-For questions or feedback, please reach out:
-- Email: your.email@example.com
-- LinkedIn: [Your LinkedIn](https://linkedin.com/in/yourprofile)
-
----
-
-**Made with ❤️ and lots of ☕**
+1. Import the root of the repository (`Project---StaySphere`) into Vercel.
+2. Select **Other** as the Framework Preset (keep the Root Directory as `./`).
+3. Add the environment variables (`MONGO_URL`, `SESSION_SECRET`, `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`, `CLOUDINARY_API_SECRET`) in Vercel settings.
+4. Click **Deploy**. Vercel will automatically compile the frontend assets and route all `/api/*` traffic to the serverless Express backend.
