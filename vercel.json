@@ -1,6 +1,6 @@
 {
     "version": 2,
-    "buildCommand": "npm run build",
+    "buildCommand": "npm run build:frontend",
     "outputDirectory": "frontend/dist",
     "env": {
         "NODE_ENV": "production"
@@ -13,6 +13,10 @@
     ],
     "routes": [
         {
+            "src": "/uploads/(.*)",
+            "dest": "/backend/app.js"
+        },
+        {
             "src": "/api/(.*)",
             "dest": "/backend/app.js"
         },
@@ -22,7 +26,7 @@
         },
         {
             "src": "/(.*)",
-            "dest": "/frontend/dist/index.html"
+            "dest": "/backend/app.js"
         }
     ]
 }
