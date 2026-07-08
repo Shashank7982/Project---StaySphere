@@ -70,16 +70,21 @@ exports.postLogin = async function (req, res, next) {
         if (isMatch) {
             req.session.isLoggedIn = true;
             req.session.user = user;
-            await req.session.save();
-            return res.json({
-                message: 'Login successful',
-                user: {
-                    _id: user._id,
-                    firstName: user.firstName,
-                    lastName: user.lastName,
-                    email: user.email,
-                    userType: user.userType
+            req.session.save((err) => {
+                if (err) {
+                    console.log("Session Save Error:", err);
+                    return res.status(500).json({ errors: ["Internal Server Error"] });
                 }
+                return res.json({
+                    message: 'Login successful',
+                    user: {
+                        _id: user._id,
+                        firstName: user.firstName,
+                        lastName: user.lastName,
+                        email: user.email,
+                        userType: user.userType
+                    }
+                });
             });
         } else {
             return res.status(401).json({ errors: ["Invalid email or password"] });
